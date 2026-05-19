@@ -1,4 +1,11 @@
-HEADER_INFO = """""".strip()
+HEADER_INFO = """
+<div class="header-container">
+    <div class="header-logo">🍲</div>
+    <h1 class="header-title">Chef Transformer</h1>
+    <p class="header-subtitle">State-of-the-Art AI Recipe Generator</p>
+    <p class="header-description">Select your chef, enter your ingredients, and let the AI cook up a custom recipe for you!</p>
+</div>
+""".strip()
 SIDEBAR_INFO = """
 <div class="contributors font-body text-bold">
 <a class="contributor comma" >Aditya Nautiyal</a>

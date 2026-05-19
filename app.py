@@ -197,20 +197,22 @@ def main():
     # 🔥 Header (clean + centered)
     st.markdown(meta.HEADER_INFO, unsafe_allow_html=True)
 
-    st.markdown("### 👨‍🍳 Choose Your Chef")
-    chef = st.selectbox(
-        "",
-        index=0,
-        options=["Chef Scheherazade", "Chef Giovanni"]
-    )
+    # Inputs layout inside columns
+    col1, col2 = st.columns(2)
+    with col1:
+        chef = st.selectbox(
+            "👨‍🍳 Choose Your Chef",
+            index=0,
+            options=["Chef Scheherazade", "Chef Giovanni"]
+        )
 
-    # Examples
-    prompts = list(EXAMPLES.keys()) + ["Custom"]
-    prompt = st.selectbox(
-        '🍽️ Try an Example',
-        prompts,
-        index=0
-    )
+    with col2:
+        prompts = list(EXAMPLES.keys()) + ["Custom"]
+        prompt = st.selectbox(
+            '🍽️ Try an Example',
+            prompts,
+            index=0
+        )
 
     if prompt == "Custom":
         prompt_box = ""
@@ -258,21 +260,29 @@ def main():
                 generated_recipe["by"] = chef
 
                 # 🔥 NEW CLEAN LAYOUT (stacked instead of side-by-side)
-
-                st.markdown(f"## 🍜 {title}")
-
-                st.markdown(
-                    f"<div style='text-align:center'><img src='{food_image}' width='250'/></div>",
-                    unsafe_allow_html=True
-                )
-
-                st.markdown("### 🧂 Ingredients")
+                recipe_html = f"""<div class="recipe-card">
+<h2 class="recipe-title">🍜 {title}</h2>
+<div class="recipe-image-wrapper">
+<img class="recipe-image" src="{food_image}" width="250" />
+</div>
+<div class="ingredients-section">
+<h3>🧂 Ingredients</h3>
+<ul style="list-style-type: none; padding-left: 0; margin-left: 0;">"""
                 for item in ingredients:
-                    st.write(f"• {item}")
-
-                st.markdown("### 👨‍🍳 Directions")
-                for i, step in enumerate(directions, 1):
-                    st.write(f"{i}. {step}")
+                    recipe_html += f'<li class="ingredient-item">{item}</li>'
+                
+                recipe_html += """</ul>
+</div>
+<div class="directions-section">
+<h3>👨‍🍳 Directions</h3>
+<ol style="padding-left: 20px; margin-left: 0; color: #cbd5e1;">"""
+                for step in directions:
+                    recipe_html += f'<li class="direction-item">{step}</li>'
+                
+                recipe_html += """</ol>
+</div>
+</div>"""
+                st.markdown(recipe_html, unsafe_allow_html=True)
 
                 # Optional image card (kept but cleaner)
                 st.markdown("### 📸 Shareable Recipe Card")
