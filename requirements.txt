@@ -1,0 +1,6 @@
+datasets
+transformers
+torch
+Pillow
+requests
+streamlit
